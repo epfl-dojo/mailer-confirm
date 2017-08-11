@@ -1,3 +1,7 @@
+<?php
+  require_once('init.php');
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,9 +17,17 @@
 <p>Un email a été envoyé à l'adresse <?php echo $_REQUEST['email'] ?>. Veuillez cliquer sur le lien qui s'y trouve.</p>
 
 <?php
+  $confirmkey = "mysupersecrectconfirmkey"; // See hash salt secrect
   $headers = 'From: noreply@epfl.ch' . "\r\n" .
   'X-Mailer: PHP/' . phpversion();
+  $confirmlink = 'http://' . $_SERVER['SERVER_NAME'] . "/mailer/confirmaccount.php" . "?confirmkey=" . $confirmkey;
+  mail($_REQUEST['email'], "valider votre email", $confirmlink, $headers);
 
-  mail($_REQUEST['email'], "valider votre email", "blabla click me", $headers);
+  print_r ($_SERVER);
+  $logger->addInfo('Send_form_email REQUEST = ', $_REQUEST);
+  $logger->addInfo('... confirm link = ', array($confirmlink));
+
+  
+
 ?>
 </html>
