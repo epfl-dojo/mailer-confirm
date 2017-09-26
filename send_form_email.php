@@ -19,15 +19,17 @@
 <?php
   $confirmkey = "mysupersecrectconfirmkey"; // See hash salt secrect
   $headers = 'From: noreply@epfl.ch' . "\r\n" .
+  'To: ' . $_REQUEST['email'] . "\r\n" .
   'X-Mailer: PHP/' . phpversion();
   $confirmlink = 'http://' . $_SERVER['SERVER_NAME'] . "/mailer/confirmaccount.php" . "?confirmkey=" . $confirmkey;
   mail($_REQUEST['email'], "valider votre email", $confirmlink, $headers);
+  var_dump(mail($_REQUEST['email'], "valider votre email", $confirmlink, $headers));
 
   print_r ($_SERVER);
   $logger->addInfo('Send_form_email REQUEST = ', $_REQUEST);
   $logger->addInfo('... confirm link = ', array($confirmlink));
 
-  
+
 
 ?>
 </html>
